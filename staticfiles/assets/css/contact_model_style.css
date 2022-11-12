@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "Roboto", sans-serif;
+  /*margin: 0;*/
+  /*padding: 0;*/
+  /*background-image: linear-gradient(45deg, #fafafa 35%, #ffffff 35%, #ffffff 50%, #fafafa 50%, #fafafa 85%, #ffffff 85%, #ffffff 100%);*/
+  /*background-size: 14.14px 14.14px;*/
+}
+
+/*main {*/
+/*  width: 600px;*/
+/*  max-width: 100vw;*/
+/*  margin: 0 auto;*/
+/*  padding: 0 2rem;*/
+/*}*/
+/*main div {*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*  justify-content: space-between;*/
+/*}*/
+
+button {
+  border-radius: 10px;
+  border: none;
+  letter-spacing: calc(3 * 0.025em);
+  font-family: inherit;
+  color: #514F4F;
+  background-color: #eef1f7;
+  font-size: large;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: background-color 0.25 ease-in-out;
+}
+button:focus {
+  outline: none;
+  background-color: #e7ebf4;
+}
+
+p {
+  color: #514F4F;
+  letter-spacing: 0.025em;
+  line-height: 1.625;
+}
+
+#open-dialog {
+  margin: 0 auto;
+}
+
+dialog {
+  border: none !important;
+  border-radius: calc(5px * 3.74);
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 0;
+}
+dialog[open] {
+  transform: scale(0);
+  animation: dialog-show 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+@keyframes dialog-show {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+dialog.hide {
+  transform: scale(1);
+  animation: dialog-hide 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+@keyframes dialog-hide {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+dialog::backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+dialog[open]::backdrop {
+  transform: scaleY(0.01) scaleX(0);
+  animation: dialog-show-backdrop 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+@keyframes dialog-show-backdrop {
+  0% {
+    transform: scaleY(0.005) scaleX(0);
+  }
+  50% {
+    transform: scaleY(0.005) scaleX(1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+}
+dialog.hide::backdrop {
+  transform: scaleX(1);
+  animation: dialog-hide-backdrop 0.9s 0.3s cubic-bezier(0.165, 0.84, 0.04, 1) forwards;
+}
+@keyframes dialog-hide-backdrop {
+  0% {
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: scaleY(0.005) scaleX(1);
+  }
+  100% {
+    transform: scaleY(0.005) scaleX(0);
+  }
+}
+dialog button.close {
+  background-color: transparent;
+  border: 0;
+  padding: 1rem;
+  margin: -1rem -1rem -1rem auto;
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+dialog button.close:focus, dialog button.close:hover {
+  color: #000;
+  text-decoration: none;
+  opacity: 0.75;
+}
+dialog button.close:not(:disabled):not(.disabled) {
+  cursor: pointer;
+}
+dialog .dialog-content {
+  display: flex;
+  flex-flow: column;
+  max-height: 90vh;
+  padding: 1.5rem;
+}
+dialog .dialog-content > .header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex: 0 1 auto;
+}
+dialog .dialog-content > .body {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+dialog .dialog-content > .footer {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#cute-pic {
+  display: block;
+  width: 350px;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+@media screen and (max-width: 420px) {
+  #cute-pic {
+    width: 100%;
+  }
+}
