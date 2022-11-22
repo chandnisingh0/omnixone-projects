@@ -1,0 +1,188 @@
+{% load static %}
+{% load original_images %}
+{% load original_images_01 %}
+{% load original_images_02 %}
+{% load original_images_03 %}
+
+<html>
+
+    <head>
+        <title>Portfolio</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+            integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+            crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    </head>
+    <style>
+        .datamodel {
+            height: 90vh;
+            width: 80vw;
+            position: absolute;
+            background-color: rgb(255, 255, 255);
+            border: solid 2px rgb(0, 0, 0);
+            z-index: 1;
+            margin: 10px;
+            display: none;
+            transition: 2s all;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 1px -1px 20px 9px rgb(0 0 0 / 30%);
+            animation-name: animatetop;
+            animation-duration: 0.4s;
+            animation: animatetop 0.4s ease-in-out;
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        .datamodel-title {
+            margin-bottom: .5rem;
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 1.2;
+            padding: 10px;
+        }
+
+        .model-html {
+            height: 90%;
+            overflow: auto;
+            width: 100%
+        }
+
+        .datamodel-header {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            justify-content: space-between;
+            background-color: lightblue;
+            margin: 10px;
+        }
+
+        .filters {
+            text-align: center;
+            align-items: center;
+            padding: 10px;
+            background-color: #dc3545;
+            width: auto;
+        }
+
+        .filter-active {
+            color: yellow;
+        }
+
+        .filters>div>li {
+            color: white;
+            padding: 25px;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        .list-class:hover {
+            color: yellow
+        }
+
+        .filters>div {
+            display: flex;
+            flex-direction: row;
+            gap: .5rem;
+        }
+
+        .portimgnew {
+            width: 300px;
+            height: 200px
+        }
+
+        .portfolio-info {
+            background-color: rgba(156, 12, 79, 0.849);
+            position: absolute;
+            top: 140px;
+            width: 100%;
+            display: none;
+            padding: 10px;
+            color: white;
+        }
+    </style>
+
+    <body>
+        <div class="datamodel model" data-aos="fade-up" data-aos-delay="300" id="datamodel">
+            <div class="datamodel-header">
+                <div class="datamodel-title" id="datamodel-title">Title</div>
+                <button style="padding: 10px" onclick=" document.getElementById('datamodel').style.display='none'"
+                    class=""> <i class=" bi bi-x-lg"></i></button>
+            </div>
+            <div id="html-code" class="model-html"></div>
+        </div>
+
+        {% if password %}
+
+        {% else %}
+        <div class="datamodel model" data-aos="fade-up" data-aos-delay="300" id="datamodel">
+            <div class="pageHover" id="password_page">
+                <p>Write the password to access the image</p>
+                <br>
+                <input class="form-control" type="text" id="password_text" name="password" placeholder="password">
+                <br>
+                <center>
+                    <button onclick="submit()" class="btn btn-primary" id="password_submit">Submit</button>
+                </center>
+            </div>
+        </div>
+        {% endif %}
+
+        <div>
+            <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry"
+                data-portfolio-sort="original-order">
+                <ul class="filters aos-init aos-animate" data-aos="fade-up" data-aos-delay="100" style="padding: 0%;">
+                    <div>
+                        <li class="list-class" data-filter="*" class="filter-active"><b>All</b></li>
+                        <li class="list-class" data-filter=".filter-controllers"><b>Controllers</b></li>
+                        <li class="list-class" data-filter=".filter-embeddedlinux"><b>Embedded Linux</b></li>
+                        <li class="list-class" data-filter=".filter-pcb"><b>PCB designing</b></li>
+                        <li class="list-class" data-filter=".filter-web"><b>Web &amp; App</b></li>
+                    </div>
+                </ul>
+                {% if original_image %}
+                <div class="d-flex flex-row flex-wrap gap-4 filter-controllers">
+                    {% for x in controllervar %}
+                    <div class="d-flex flex-column p-3" style="width: 300px; position: relative">
+                        <img src="{% get_original_image_view x password %}" class="portimgnew" alt=""
+                            onclick="return loadmodel('controllerr', '{{x.id}}')">
+                        {% if password %}
+                        <div class="portfolio-info">
+                            <h4>{{x.title}}</h4>
+                            <p>{{x.description}}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% endfor %}
+                </div>
+                {% else %}
+                {% for x in controllervar %}
+                <div class="d-flex flex-row flex-wrap gap-4">
+                    <img src="{{x.blurController.url }}" class="portimgnew" alt="">
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </body>
+
+</html>

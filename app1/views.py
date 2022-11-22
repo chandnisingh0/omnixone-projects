@@ -1,15 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 from django.shortcuts import render, redirect,HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import authenticate, login, logout
-
+import json
 from .models import Controller
 from .models import EmbeddedLinux
 from .models import PcbDesigning
 from .models import WebApp
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
  
 # portfolio password section
@@ -99,7 +102,7 @@ def image_view_03(request, password, image_id):
 
 
 
-def projects(request, password=None) :
+def projects(request, password=False) :
     controllervar = Controller.objects.all()
     EmbeddedLinuxvar = EmbeddedLinux.objects.all()
     PcbDesigningvar = PcbDesigning.objects.all()
@@ -120,6 +123,7 @@ def projects(request, password=None) :
     original_image_03 = False
     if password == CURRENT_PASSWORD:
         original_image_03 = True
+        
 
     return render(
         request,
@@ -138,6 +142,22 @@ def projects(request, password=None) :
     )
     # return render(request,'trail.html' , {'titles':'trail'})
 
+@api_view(['GET'])
+def getApiprojectDetails(request, data, idx):
+    if data == 'controllerr':
+        s = Controller.objects.filter(id=idx).values('title', 'blurController', 'originalController', 'description', 'html_code')
+        return Response(s)
+    elif data=='embeddedlinux':
+        s = EmbeddedLinux.objects.filter(id=idx).values('title', 'blurEmbeddedLinux', 'originalEmbeddedLinux', 'description', 'html_code')
+        return Response(s)
+    elif data == 'pcb':
+        s = PcbDesigning.objects.filter(id=idx).values('title', 'blurPcbDesigning', 'originalPcbDesigning', 'description', 'html_code')
+        return Response(s)
+    elif data == 'web':
+        s = WebApp.objects.filter(id=idx).values('title', 'blurWebApp', 'originalWebApp', 'description', 'html_code')
+        return Response(s)
+    
+        
 
 # def portfolio1(request) :
 #     if request.method == 'POST':

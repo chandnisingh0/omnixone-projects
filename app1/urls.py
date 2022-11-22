@@ -5,28 +5,15 @@ from django.urls import path, include  # new
 from django.conf.urls.static import static  # new
 
 # from .views import portfolio, blur_image_view, image_view, check_password_image, blur_image_view_01, image_view_01, blur_image_view_02, image_view_02, blur_image_view_03, image_view_03
-from .views import projects, blur_image_view, image_view, check_password_image, blur_image_view_01, image_view_01, blur_image_view_02, image_view_02, blur_image_view_03, image_view_03
+from .views import projects, blur_image_view, image_view, check_password_image, blur_image_view_01, image_view_01, blur_image_view_02, image_view_02, blur_image_view_03, image_view_03, getApiprojectDetails
  
 urlpatterns = [
-
-
-
-#------------ portfolio password section------------
-    # path(
-    #     "check-password-image/<str:password>/", check_password_image, name="portfolio"
-    # ),
     path(
         "check-password-image/<str:password>/", check_password_image, name="projects"
     ),
-    # path("portfolio/<str:password>/", portfolio, name="portfolio"),
-    # path("portfolio/", portfolio, name="portfolio"),
+    path('api/getdetails/<str:data>/<str:idx>/', getApiprojectDetails, name="Api Details"),
     path("projects/<str:password>/", projects, name="projects"),
     path("projects/", projects, name="projects"),
-
-
-
-
-
     path("blur-image-view/<int:image_id>/", blur_image_view, name="blur_image_view"),
     path("image-view/<str:password>/<int:image_id>/", image_view, name="image_view"),
     # ------------
