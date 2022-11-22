@@ -13,6 +13,7 @@ class Controller(models.Model):
     blurController      = models.ImageField(default="blur-image.jpeg", null=True)
     originalController  = models.ImageField(upload_to="original_image", null=True)
     description = models.CharField(max_length=350, null=True)
+    html_code = models.TextField(blank=True)
 
     # multiController1  = models.ImageField(upload_to="original_image", null=True)
     # multiController2  = models.ImageField(upload_to="original_image", null=True)
@@ -34,11 +35,12 @@ class EmbeddedLinux(models.Model):
     originalEmbeddedLinux = models.ImageField(upload_to="original_image_01",null=True)
     # EmbeddedLinux = models.ImageField(upload_to="images")
     description = models.CharField(max_length=350,null=True)
-
-    multiImgEmb1  = models.ImageField(upload_to="original_image", null=True)
-    multiImgEmb2  = models.ImageField(upload_to="original_image", null=True)
-    multiImgEmb3  = models.ImageField(upload_to="original_image", null=True)
-    multiImgEmb4  = models.ImageField(upload_to="original_image", null=True)
+    html_code = models.TextField(blank=True)
+    
+    # multiImgEmb1  = models.ImageField(upload_to="original_image", null=True)
+    # multiImgEmb2  = models.ImageField(upload_to="original_image", null=True)
+    # multiImgEmb3  = models.ImageField(upload_to="original_image", null=True)
+    # multiImgEmb4  = models.ImageField(upload_to="original_image", null=True)
 
     def get_blur_image_url_01(self):
         return reverse("blur_image_view_01", args=[str(self.id)])
@@ -52,6 +54,7 @@ class PcbDesigning(models.Model):
     originalPcbDesigning = models.ImageField(upload_to="original_image_02",null=True)
     # PcbDesigning = models.ImageField(upload_to="images")
     description = models.CharField(max_length=350,null=True)
+    html_code = models.TextField(blank=True)
 
     def get_blur_image_url_02(self):
         return reverse("blur_image_view_02", args=[str(self.id)])
@@ -66,6 +69,7 @@ class WebApp(models.Model):
     originalWebApp = models.ImageField(upload_to="original_image_03",null=True)
     # WebApp = models.ImageField(upload_to="images")
     description = models.CharField(max_length=350,null=True)
+    html_code = models.TextField(blank=True)
 
     def get_blur_image_url_03(self):
         return reverse("blur_image_view_03", args=[str(self.id)])
