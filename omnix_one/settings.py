@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-6lg%wzki!pbj3cd^y$jqydxuwbb(k-nrg*yi+wq3!$+ff4@6)('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =False 
 
 ALLOWED_HOSTS = ['www.omnix.one', '*']
 

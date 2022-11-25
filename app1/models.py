@@ -12,6 +12,10 @@ class Controller(models.Model):
     title = models.CharField(max_length=40,null=True)
     blurController      = models.ImageField(default="blur-image.jpeg", null=True)
     originalController  = models.ImageField(upload_to="original_image", null=True)
+    image2  = models.ImageField(upload_to="original_image", null=True)
+    image3  = models.ImageField(upload_to="original_image", null=True)
+    image4  = models.ImageField(upload_to="original_image", null=True)
+    image5  = models.ImageField(upload_to="original_image", null=True)
     description = models.CharField(max_length=350, null=True)
     html_code = models.TextField(blank=True)
 

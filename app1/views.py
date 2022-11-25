@@ -89,7 +89,7 @@ def blur_image_view_03(request, image_id):
         img = open(obj.blurWebApp.path, "rb")
         return FileResponse(img)
     except Controller.DoesNotExist:
-        raise Http404("image dies not exits")
+        raise Http404("image does not exits")
 
 def image_view_03(request, password, image_id):
     if password == CURRENT_PASSWORD:
