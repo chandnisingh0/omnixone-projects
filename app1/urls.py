@@ -26,9 +26,6 @@ urlpatterns = [
     path("blur-image-view-03/<int:image_id>/", blur_image_view_03, name="blur_image_view_03"),
     path("image-view-03/<str:password>/<int:image_id>/", image_view_03, name="image_view_03"),
 
-]
+] + static('media/123/', document_root=settings.MEDIA_ROOT)
 
-
-if settings.DEBUG:  # new
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

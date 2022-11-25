@@ -142,9 +142,10 @@
     }
 
     .model-html {
-      height: 90%;
+      height: 290px;
       overflow: auto;
-      width: 100%
+      width: 100%;
+      margin: 10px
     }
 
     .datamodel-header {
@@ -153,6 +154,17 @@
       gap: 1rem;
       justify-content: space-between;
       margin: 10px;
+    }
+
+    .hoverask {
+      display: none;
+      padding: 10px;
+      z-index: 1;
+      animation-name: animatetop;
+      animation-duration: 0.4s;
+      animation: animatetop 0.4s ease-in-out;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 
@@ -167,13 +179,34 @@
             class=" bi bi-x-lg"></i></button>
       </div>
       <hr style="border:1px solid black" />
-      <div id="datamodel-image11">
+      <!-- <div id="datamodel-image11">
 
-      </div>
+      </div> -->
       <div id="html-code" class="model-html"></div>
     </div>
+    {% if password %}
 
-    <section id="portfolio" class="portfolio" style="height:100vh;overflow:auto">
+    {%else%}
+    <div class="hoverask" id="password_page" style="width: 100vw;" onmouseleave="showPasword(false)">
+      <div style="display:flex;flex-direction:row">
+        <p>Write the password to access the image</p>
+        <button style="padding: 10px; color:rgb(0, 0, 0); font-size:20px; margin-left:100px"
+          onclick="showPasword(false)" class=""> <i class=" bi bi-x-lg"></i></button>
+      </div>
+      <br>
+      <input style="width:50%" type="text" id="password_text" name="password" placeholder="password">
+      <br>
+      <center>
+        <button onclick="submit()" class="button" id="password_submit" style="left: -69%">Submit</button>
+      </center>
+      <div class="others">
+        <a href="{% static 'img/portfolio/app-1.jpg' %}" title="App 1" data-gallery="portfolio-gallery-app"
+          class="glightbox preview-link"></a>
+        <a href="portfolio-details.html" title="More Details" class="details-link"></a>
+      </div>
+    </div>
+    {% endif %}
+    <section id="portfolio" class="portfolio pppp" style="height:100vh;overflow:auto; display:block">
       <div class="container" data-aos="fade-up">
         <div class="portfolio-isotope" data-portfolio-filter="*" data-portfolio-layout="masonry"
           data-portfolio-sort="original-order">
@@ -186,33 +219,17 @@
               <li data-filter=".filter-web"><b>Web & App</b></li>
             </div>
           </ul>
-          <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="300"
-            style="position: initial;height: auto;">
-            <div class="pageHoverFull">
-              {% if password %}
 
-              {%else%}
-              <div class="pageHover" id="password_page">
-                <p>Write the password to access the image</p>
-                <br>
-                <input style="width:50%" type="text" id="password_text" name="password" placeholder="password">
-                <br>
-                <center>
-                  <button onclick="submit()" class="button" id="password_submit" style="left: -69%">Submit</button>
-                </center>
-                <div class="others">
-                  <a href="{% static 'img/portfolio/app-1.jpg' %}" title="App 1" data-gallery="portfolio-gallery-app"
-                    class="glightbox preview-link"></a>
-                  <a href="portfolio-details.html" title="More Details" class="details-link"></a>
-                </div>
-              </div>
-              {% endif %}
+          <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="300"
+            style="position: initial;height: auto;" id="portfolio-container">
+            <div class="pageHoverFull">
+
 
               {% if original_image %}
               {% for x in controllervar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-controllers">
                 <img src="{% get_original_image_view x password %}" class="img-fluid portimgnew" alt=""
-                  onclick="return loadmodel('controllerr', '{{x.id}}')">
+                  onclick="return loadmodel('controllerr', '{{x.id}}', '{{password}}')">
                 <div class="portfolio-info" style="position: relative; top: -35%;margin-left: -9%;">
                   <h4>{{x.title}}</h4>
                   <p>{{x.description}}</p>
@@ -221,7 +238,7 @@
               {% endfor %}
               {% else %}
               {% for x in controllervar %}
-              <div class=" col-lg-4 col-md-6 portfolio-item filter-controllers">
+              <div class=" col-lg-4 col-md-6 portfolio-item filter-controllers" onmouseenter="showPasword(true)">
                 <img src="{{x.get_blur_image_url }}" class="img-fluid portimgnew" alt="">
               </div>
               {% endfor %}
@@ -231,7 +248,7 @@
               {% for x in EmbeddedLinuxvar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-embeddedlinux">
                 <img src="{% get_original_image_view_01 x password %}" class="img-fluid portimgnew" alt=""
-                  onclick="return loadmodel('embeddedlinux', '{{x.id}}')">
+                  onclick="return loadmodel('embeddedlinux', '{{x.id}}', '{{password}}')">
                 <div class="portfolio-info" style="position: relative; top: -35%;margin-left: -9%;">
                   <h4>{{x.title}}</h4>
                   <p>{{x.description}}</p>
@@ -241,7 +258,8 @@
               {% else %}
               {% for x in EmbeddedLinuxvar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-embeddedlinux">
-                <img src="{{x.get_blur_image_url_01 }}" class="img-fluid portimgnew" alt="">
+                <img src="{{x.get_blur_image_url_01 }}" class="img-fluid portimgnew" onmouseenter="showPasword(true)"
+                  alt="">
               </div>
               {% endfor %}
               {% endif %}
@@ -250,7 +268,7 @@
               {% for x in PcbDesigningvar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-pcb">
                 <img src="{% get_original_image_view_02 x password %}" class="img-fluid portimgnew" alt=""
-                  onclick="return loadmodel('pcb', '{{x.id}}')">
+                  onclick="return loadmodel('pcb', '{{x.id}}', '{{password}}')">
                 <div class="portfolio-info" style="position: relative; top: -35%;margin-left: -9%;">
                   <h4>{{x.title}}</h4>
                   <p>{{x.description}}</p>
@@ -260,7 +278,8 @@
               {% else %}
               {% for x in PcbDesigningvar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-pcb">
-                <img src="{{x.get_blur_image_url_02 }}" class="img-fluid portimgnew" alt="">
+                <img src="{{x.get_blur_image_url_02 }}" class="img-fluid portimgnew" onmouseenter="showPasword(true)"
+                  alt="">
               </div>
               {% endfor %}
               {% endif %}
@@ -269,7 +288,7 @@
               {% for x in WebAppvar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-web">
                 <img src="{% get_original_image_view_03 x password %}" class="img-fluid portimgnew" alt=""
-                  onclick="return loadmodel('web', '{{x.id}}')">
+                  onclick="return loadmodel('web', '{{x.id}}', '{{password}}')">
                 <div class="portfolio-info" style="position: relative; top: -35%;margin-left: -9%;">
                   <h4>{{x.title}}</h4>
                   <p>{{x.description}}</p>
@@ -279,7 +298,8 @@
               {% else %}
               {% for x in WebAppvar %}
               <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                <img src="{{x.get_blur_image_url_03 }}" class="img-fluid portimgnew" alt="">
+                <img src="{{x.get_blur_image_url_03 }}" class="img-fluid portimgnew" onmouseenter="showPasword(true)"
+                  alt="">
               </div>
               {% endfor %}
               {% endif %}
@@ -336,31 +356,43 @@
 
     <script>
 
-      async function callImage(data, modelType) {
+      async function callImage(data, modelType, password, id) {
         if (modelType === 'controllerr') {
-          document.getElementById('datamodel-image11').innerHTML = `<img style="width:300px; height: 200px" src=${window.location.origin}/media/${data[0].originalController} alt=${data[0].title} />`
+          document.getElementById('datamodel-image11').innerHTML = `<img style="width:300px; height: 200px" src='${window.location.origin}/image-view/${password}/${id}' alt=${data[0].title} />`
         }
-        else if (modelType === 'embeddedLinux') {
-          document.getElementById('datamodel-image11').innerHTML = data[0].originalEmbeddedLinux
+        else if (modelType === 'embeddedlinux') {
+          document.getElementById('datamodel-image11').innerHTML = `<img style="width:300px; height: 200px;" src=${window.location.origin}/media/${password}/${data[0].originalEmbeddedLinux} >`
         }
         else if (modelType === 'pcb') {
-          document.getElementById('datamodel-image11').innerHTML = data[0].originalPcbDesigning
+          document.getElementById('datamodel-image11').innerHTML = `<img style="width:300px; height: 200px;" src=${window.location.origin}/media/${password}/${data[0].originalPcbDesigning} >`
         }
         else if (modelType === 'web') {
-          document.getElementById('datamodel-image11').innerHTML = data[0].originalWebApp
+          document.getElementById('datamodel-image11').innerHTML = `<img style="width:300px; height: 200px;" src=${window.location.origin}/media/${password}/${data[0].originalWebApp} >`
         }
 
       }
 
-      async function loadmodel(modelType, id) {
+      async function loadmodel(modelType, id, password) {
         document.getElementById('datamodel').style.display = "block";
         await fetch(`/api/getdetails/${modelType}/${id}/`)
           .then((res) => res.json())
           .then(async (data1) => {
             document.getElementById('datamodel-title').innerHTML = data1[0].title
             document.getElementById('html-code').innerHTML = data1[0].html_code
-            await callImage(data1, modelType)
+            await callImage(data1, modelType, password, id)
           })
+      }
+
+      async function showPasword(type = false) {
+        if (type === true) {
+          document.querySelector('.hoverask').style.display = 'flex';
+          document.querySelector('.hoverask').style.flexDirection = 'column';
+          document.querySelector('.pppp').style.display = 'none'
+        }
+        else {
+          document.querySelector('.hoverask').style.display = 'none';
+          document.querySelector('.pppp').style.display = 'block'
+        }
       }
 
     </script>
